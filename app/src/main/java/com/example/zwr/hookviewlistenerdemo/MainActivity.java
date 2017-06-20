@@ -1,6 +1,8 @@
 package com.example.zwr.hookviewlistenerdemo;
 
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,6 +19,8 @@ import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack;
 import com.example.zwr.hookviewlistenerdemo.proxy.ProxyListenerConfigBuilder;
 import com.example.zwr.hookviewlistenerdemo.widget.PullToRefreshListView;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 Log.d(TAG, "onLayoutChange:" + v.getClass().getSimpleName());
-                if (isHookListener) {//等待activity执行完毕，刷新界面是重新检测是否有需要hook的；已经初始化过了，不用每次都初始化
-                    Log.d(TAG, "isHookListener onLayoutChange:" + v.getClass().getSimpleName());
+                if (hasHooked) {//等待activity执行完毕，刷新界面是重新检测是否有需要hook的；已经初始化过了，不用每次都初始化
+                    Log.d(TAG, "hasHooked onLayoutChange:" + v.getClass().getSimpleName());
                     HookViewManager.getInstance().hookStart(MainActivity.this);
                 }
             }
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 首次执行会hook监听器
      */
-    private boolean isHookListener = false;
+    private boolean hasHooked = false;
 
 
     private void buildListernerConfigBuilder() {
@@ -161,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         Log.d(TAG, "onWindowFocusChange:");
-        if (isHookListener) {//防止退出的时候还hook
+        if (hasHooked) {//防止退出的时候还hook
             return;
         }
         getWindow().getDecorView().post(new Runnable() {
@@ -170,7 +174,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "Runnable()1 :");
                 buildListernerConfigBuilder();
                 HookViewManager.getInstance().hookStart(MainActivity.this);
-                isHookListener = true;
+                try {
+                    attachContext();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                hasHooked = true;
                 Log.d(TAG, "Runnable()2 :");
             }
         });
@@ -194,11 +203,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v == tv_click_hello) {
             Toast.makeText(context, "click hello world", Toast.LENGTH_SHORT).show();
+            context.startActivity(new Intent(MainActivity.this, TestActivity.class));
+            MainActivity.this.startActivity(new Intent(MainActivity.this, TestActivity.class));
         } else if (v == tv_click_me) {
             Toast.makeText(context, "click me !", Toast.LENGTH_SHORT).show();
         } else if (v == tv_long_click_me) {
             Toast.makeText(context, "click long me", Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    public static void attachContext() throws Exception {
+        // 先获取到当前的ActivityThread对象
+        Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
+        Method currentActivityThreadMethod = activityThreadClass.getDeclaredMethod("currentActivityThread");
+        currentActivityThreadMethod.setAccessible(true);
+        Object currentActivityThread = currentActivityThreadMethod.invoke(null);
+
+        // 拿到原始的 mInstrumentation字段
+        Field mInstrumentationField = activityThreadClass.getDeclaredField("mInstrumentation");
+        mInstrumentationField.setAccessible(true);
+        Instrumentation mInstrumentation = (Instrumentation) mInstrumentationField.get(currentActivityThread);
+
+        // 创建代理对象
+        Instrumentation evilInstrumentation = new EvilInstrumentation(mInstrumentation);
+
+        // 偷梁换柱
+        mInstrumentationField.set(currentActivityThread, evilInstrumentation);
     }
 }
