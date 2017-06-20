@@ -1,4 +1,4 @@
-package com.example.zwr.hookviewlistenerdemo;
+package com.example.jing.hookdemo;
 
 import android.app.Instrumentation;
 import android.content.Context;
@@ -7,17 +7,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zwr.hookviewlistenerdemo.adapter.ContentAdapter;
-import com.example.zwr.hookviewlistenerdemo.manager.HookViewManager;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack;
-import com.example.zwr.hookviewlistenerdemo.proxy.ProxyListenerConfigBuilder;
-import com.example.zwr.hookviewlistenerdemo.widget.PullToRefreshListView;
+import com.example.jing.hookdemo.adapter.ContentAdapter;
+import com.example.jing.hookdemo.manager.HookViewManager;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack;
+import com.example.jing.hookdemo.proxy.ProxyListenerConfigBuilder;
+import com.example.jing.hookdemo.widget.PullToRefreshListView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -90,23 +89,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "lvTestClick = onNothingSelected");
             }
         });
-        getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                Log.d(TAG, "onLayoutChange:" + v.getClass().getSimpleName());
-                if (hasHooked) {//等待activity执行完毕，刷新界面是重新检测是否有需要hook的；已经初始化过了，不用每次都初始化
-                    Log.d(TAG, "hasHooked onLayoutChange:" + v.getClass().getSimpleName());
-                    HookViewManager.getInstance().hookStart(MainActivity.this);
-                }
-            }
-        });
-        getWindow().getDecorView().//view加载完成时回调
-                getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Log.d(TAG, "OnGlobalLayoutListener() :");
-            }
-        });
+//        getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                Log.d(TAG, "onLayoutChange:" + v.getClass().getSimpleName());
+//                if (hasHooked) {//等待activity执行完毕，刷新界面是重新检测是否有需要hook的；已经初始化过了，不用每次都初始化
+//                    Log.d(TAG, "hasHooked onLayoutChange:" + v.getClass().getSimpleName());
+//                    HookViewManager.getInstance().hookStart(MainActivity.this);
+//                }
+//            }
+//        });
+//        getWindow().getDecorView().//view加载完成时回调
+//                getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                Log.d(TAG, "OnGlobalLayoutListener() :");
+//            }
+//        });
     }
 
     private void initView() {
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        Log.d(TAG, "onWindowFocusChange:");
+        Log.d(TAG, "onWindowFocusChange:" + hasHooked);
         if (hasHooked) {//防止退出的时候还hook
             return;
         }
@@ -174,11 +173,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "Runnable()1 :");
                 buildListernerConfigBuilder();
                 HookViewManager.getInstance().hookStart(MainActivity.this);
-                try {
-                    attachContext();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 hasHooked = true;
                 Log.d(TAG, "Runnable()2 :");
             }
@@ -204,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == tv_click_hello) {
             Toast.makeText(context, "click hello world", Toast.LENGTH_SHORT).show();
             context.startActivity(new Intent(MainActivity.this, TestActivity.class));
-            MainActivity.this.startActivity(new Intent(MainActivity.this, TestActivity.class));
+//            MainActivity.this.startActivity(new Intent(MainActivity.this, TestActivity.class));
         } else if (v == tv_click_me) {
             Toast.makeText(context, "click me !", Toast.LENGTH_SHORT).show();
         } else if (v == tv_long_click_me) {
@@ -225,8 +219,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mInstrumentationField.setAccessible(true);
         Instrumentation mInstrumentation = (Instrumentation) mInstrumentationField.get(currentActivityThread);
 
+
         // 创建代理对象
         Instrumentation evilInstrumentation = new EvilInstrumentation(mInstrumentation);
+
 
         // 偷梁换柱
         mInstrumentationField.set(currentActivityThread, evilInstrumentation);

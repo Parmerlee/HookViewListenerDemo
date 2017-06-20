@@ -1,17 +1,17 @@
-package com.example.zwr.hookviewlistenerdemo.proxy;
+package com.example.jing.hookdemo.proxy;
 
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnClickProxyListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnFocusChangeListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnGenericMotionListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnHoverListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnKeyListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnLongClickProxyListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnScrollChangeListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnSystemUiVisibilityChangeListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnTouchListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnItemClickProxyListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnItemLongClickProxyListener;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack.OnItemSelectedProxyListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnClickProxyListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnFocusChangeListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnGenericMotionListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnHoverListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnKeyListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnLongClickProxyListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnScrollChangeListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnSystemUiVisibilityChangeListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnTouchListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnItemClickProxyListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnItemLongClickProxyListener;
+import com.example.jing.hookdemo.proxy.OnListenerProxyCallBack.OnItemSelectedProxyListener;
 
 /**
  * author : zhongwr on 2016/12/31

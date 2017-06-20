@@ -1,4 +1,4 @@
-package com.example.zwr.hookviewlistenerdemo.manager;
+package com.example.jing.hookdemo.manager;
 
 import android.app.Activity;
 import android.util.Log;
@@ -7,14 +7,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.zwr.hookviewlistenerdemo.R;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnClickListenerProxy;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnItemClickListenerProxy;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnItemLongClickListenerProxy;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnItemSelectedListenerProxy;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnListenerProxyCallBack;
-import com.example.zwr.hookviewlistenerdemo.proxy.OnLongListenerProxy;
-import com.example.zwr.hookviewlistenerdemo.proxy.ProxyListenerConfigBuilder;
+import com.example.jing.hookdemo.R;
+import com.example.jing.hookdemo.proxy.OnClickListenerProxy;
+import com.example.jing.hookdemo.proxy.OnItemClickListenerProxy;
+import com.example.jing.hookdemo.proxy.OnItemLongClickListenerProxy;
+import com.example.jing.hookdemo.proxy.OnItemSelectedListenerProxy;
+import com.example.jing.hookdemo.proxy.OnLongListenerProxy;
+import com.example.jing.hookdemo.proxy.ProxyListenerConfigBuilder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center"
-    tools:context="com.example.zwr.hookviewlistenerdemo.MainActivity">
+    tools:context="com.example.jing.hookdemo.MainActivity">
 
     <TextView
         android:id="@+id/tv_click_hello"
@@ -37,8 +37,8 @@
         android:padding="10dp"
         android:text="long click me!"/>
 
-    <com.example.zwr.hookviewlistenerdemo.widget.PullToRefreshListView
+    <com.example.jing.hookdemo.widget.PullToRefreshListView
         android:id="@+id/lv_click_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.example.zwr.hookviewlistenerdemo.widget.PullToRefreshListView>
+        android:layout_height="match_parent"></com.example.jing.hookdemo.widget.PullToRefreshListView>
 </LinearLayout>

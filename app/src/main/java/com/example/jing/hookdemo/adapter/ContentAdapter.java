@@ -1,5 +1,5 @@
 
-package com.example.zwr.hookviewlistenerdemo.adapter;
+package com.example.jing.hookdemo.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,9 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
-import com.example.zwr.hookviewlistenerdemo.R;
+import com.example.jing.hookdemo.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

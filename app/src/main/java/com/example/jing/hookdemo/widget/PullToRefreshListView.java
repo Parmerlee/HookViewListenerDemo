@@ -1,4 +1,4 @@
-package com.example.zwr.hookviewlistenerdemo.widget;
+package com.example.jing.hookdemo.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -18,8 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.zwr.hookviewlistenerdemo.R;
-import com.example.zwr.hookviewlistenerdemo.manager.HookViewManager;
+import com.example.jing.hookdemo.R;
+import com.example.jing.hookdemo.manager.HookViewManager;
 
 
 public class PullToRefreshListView extends ListView implements OnScrollListener {
