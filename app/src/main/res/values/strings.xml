@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HookViewListenerDemo</string>
+
+
+    <!--hook的view的tag:用于不要重复hook-->
+    <item name="tag_onclick" type="id"></item>
+    <item name="tag_onlongclick" type="id"></item>
+
+    <item name="tag_onItemClick" type="id"></item>
+    <item name="tag_onItemLong" type="id"></item>
+    <item name="tag_onitemSelected" type="id"></item>
+
+</resources>
